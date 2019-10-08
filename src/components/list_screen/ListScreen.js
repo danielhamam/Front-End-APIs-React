@@ -5,6 +5,7 @@ import ListTrash from './ListTrash'
 import PropTypes from 'prop-types';
 
 export class ListScreen extends Component {
+
     getListName() {
         if (this.props.todoList) {
             let name = this.props.todoList.name;
@@ -19,7 +20,9 @@ export class ListScreen extends Component {
             return this.props.todoList.owner;
         }
     }
+
     render() {
+
         return (
             <div id="todo_list">
                 <ListHeading goHome={this.props.goHome} />
@@ -40,8 +43,9 @@ export class ListScreen extends Component {
                             id="list_owner_textfield" />
                     </div>
                 </div>
-                <ListItemsTable todoList={this.props.todoList} />
-            </div>
+                <ListItemsTable todoList={this.props.todoList} goItemScreen = {this.props.goItemScreen} />
+
+            </div>         
         )
     }
 }

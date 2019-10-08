@@ -14,8 +14,8 @@
 }
 
 body {
-  background-color: var(--swatch-foundation);
-  font-family: 'Lexend Exa';
+    background-color: var(--swatch-foundation);
+    font-family: 'Lexend Exa';
 }
 
 /* SCREENS */
@@ -125,8 +125,7 @@ body {
   font-weight: normal;
   font-size: 12pt;
 }
-.list_item_card_assigned_to {}
-.list_item_card_due_date {}
+
 .list_item_card_completed {
   color: green;
 }
@@ -168,6 +167,7 @@ body {
 /* ITEM SCREEN CLASSES */
 .item_prompt {
   font-weight: bold;
+  font-size:14pt;
 }
 .item_input {
 font-size: 16pt;
@@ -202,7 +202,7 @@ font-size: 16pt;
 
 .modal_dialog {
   position: relative;
-  max-width: 800px;
+  width: 500px;
   max-height: 80vh;
   border-radius: 5px;
   background: var(--swatch-complement);

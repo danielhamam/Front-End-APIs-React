@@ -116,7 +116,6 @@ body {
 }
 .list_item_add_card {
   text-align: center;
-  vertical-align: center;
 }
 
 /* ITEM SCREEN CONTROLS */
@@ -131,14 +130,20 @@ body {
 #item_due_date_prompt {}
 #item_due_date_picker {}
 #item_completed_prompt {}
-#item_completed_checkbox {}
+#item_completed_checkbox {
+  width:10px;
+  margin-right: 35em;
+}
 #item_form_submit_button {}
 #item_form_cancel_button {}
 
 /* ITEM SCREEN CLASSES */
 .item_prompt {
-  grid-column: 1 / 4;
+  grid-column: 1;
+  float : left;
+  margin-top: 5%;
 }
 .item_input {
-  grid-column: 2 / 4;
+  grid-column: 2;
+  margin-top: 1%;
 }

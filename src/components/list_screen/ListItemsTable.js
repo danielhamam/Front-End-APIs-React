@@ -1,5 +1,7 @@
 import React, { Component } from 'react'
 import ListItemCard from './ListItemCard'
+import PropTypes from 'prop-types'
+import AddItem from './AddItem.png';
 
 export class ListItemsTable extends Component {
     render() {
@@ -17,6 +19,10 @@ export class ListItemsTable extends Component {
                             listItem={todoItem} />
                     ))
                 }
+                
+                <div className="list_item_add_card" onClick={this.props.goItemScreen}>
+                <img src = {AddItem}/>
+                </div>
                 </div>
             </div>
         )
