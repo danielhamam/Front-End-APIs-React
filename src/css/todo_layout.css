@@ -147,3 +147,41 @@ body {
   grid-column: 2;
   margin-top: 1%;
 }
+
+#modal_yes_no_dialog {
+  position: absolute;
+  height: 275px;
+  width: 535px;
+  top: 162px;
+  right: 280px;
+}
+
+#yes, #no {
+  font-size: 12pt;
+  height: 55px;
+  width: 55px;
+}
+
+#up, #down {
+  float : right;
+  width: 48px;
+  text-align : center;
+  height: 48px;
+  cursor: pointer;
+}
+
+.disable {
+  float : right;
+  width: 48px;
+  text-align : center;
+  height: 48px;
+  cursor: pointer;
+}
+
+#delete {
+  float : right;
+  width: 48px;
+  text-align : center;
+  height: 48px;
+  cursor: pointer;
+}

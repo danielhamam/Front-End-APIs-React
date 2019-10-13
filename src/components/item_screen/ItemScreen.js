@@ -22,7 +22,7 @@ export class ItemScreen extends Component {
             </div>
             <br />
             <button id="item_form_submit_button" class="item_button">Submit</button>
-            <button id="item_form_cancel_button" class="item_button">Cancel</button>
+            <button id="item_form_cancel_button" class="item_button" onClick={this.props.goListScreen}>Cancel</button>
     </div>
         )
     }
