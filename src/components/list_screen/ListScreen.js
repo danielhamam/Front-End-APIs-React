@@ -51,7 +51,7 @@ export class ListScreen extends Component {
                             id="list_owner_textfield" />
                     </div>
                 </div>
-                <ListItemsTable todoList={this.props.todoList} goItemScreen = {this.props.goItemScreen} goListScreen = {this.props.goListScreen} moveUp = {this.props.moveUp} moveDown={this.props.moveDown} deleteItem = {this.props.deleteItem}/>
+                <ListItemsTable todoList={this.props.todoList} goItemScreen = {this.props.goItemScreen} goListScreen = {this.props.goListScreen} moveUp = {this.props.moveUp} moveDown={this.props.moveDown} deleteItem = {this.props.deleteItem} processSortItemsByTask = {this.props.processSortItemsByTask} processSortItemsByDueDate = {this.props.processSortItemsByDueDate} processSortItemsByStatus = {this.props.processSortItemsByStatus} />
                 <ItemDelete visibility = {this.props.visibility} visibilityFalse = {this.props.visibilityFalse} deleteList = {this.props.deleteList.bind( this, this.getListKey() )} />
             </div>         
         )

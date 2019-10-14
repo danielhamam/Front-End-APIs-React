@@ -10,7 +10,16 @@ const AppScreen = {
   HOME_SCREEN: "HOME_SCREEN",
   LIST_SCREEN: "LIST_SCREEN",
   ITEM_SCREEN: "ITEM_SCREEN",
-}
+};
+
+const ItemSortCriteria = {
+  SORT_BY_TASK_INCREASING: "sort_by_task_increasing",
+  SORT_BY_TASK_DECREASING: "sort_by_task_decreasing",
+  SORT_BY_DUE_DATE_INCREASING: "sort_by_due_date_increasing",
+  SORT_BY_DUE_DATE_DECREASING: "sort_by_due_date_decreasing",
+  SORT_BY_STATUS_INCREASING: "sort_by_status_increasing",
+  SORT_BY_STATUS_DECREASING: "sort_by_status_decreasing"
+};
 
 class App extends Component {
   state = {
@@ -18,7 +27,97 @@ class App extends Component {
     todoLists: testTodoListData.todoLists,
     currentList: null,
     visibility : false,
+    currentItemSortCriteria : null,
   }
+
+isCurrentItemSortCriteria = (testCriteria) => {
+    return this.state.currentItemSortCriteria === testCriteria;
+}
+
+sortItems = (sortingCriteria) => {
+    this.setState({currentItemSortCriteria : sortingCriteria});
+    this.state.currentList.items.sort(this.compare);
+    this.setState({currentList: this.state.currentList});
+}
+
+processSortItemsByDueDate = () => {
+    // IF WE ARE CURRENTLY INCREASING BY STATUS SWITCH TO DECREASING
+    if ( this.isCurrentItemSortCriteria(ItemSortCriteria.SORT_BY_DUE_DATE_INCREASING)) {
+        this.sortItems(ItemSortCriteria.SORT_BY_DUE_DATE_DECREASING);
+    }
+    // ELSE:
+    else {
+        this.sortItems(ItemSortCriteria.SORT_BY_DUE_DATE_INCREASING);
+    }
+}
+
+processSortItemsByStatus = () => {
+  // IF WE ARE CURRENTLY INCREASING BY STATUS SWITCH TO DECREASING
+  if (this.isCurrentItemSortCriteria(ItemSortCriteria.SORT_BY_STATUS_INCREASING)) {
+      this.sortItems(ItemSortCriteria.SORT_BY_STATUS_DECREASING);
+  }
+  // ALL OTHER CASES SORT BY INCREASING
+  else {
+      this.sortItems(ItemSortCriteria.SORT_BY_STATUS_INCREASING);
+  }
+}
+
+processSortItemsByTask = () => {
+  // IF WE ARE CURRENTLY INCREASING BY TASK SWITCH TO DECREASING
+  if (this.isCurrentItemSortCriteria(ItemSortCriteria.SORT_BY_TASK_INCREASING)) {
+      this.sortItems(ItemSortCriteria.SORT_BY_TASK_DECREASING);
+  }
+  // ALL OTHER CASES SORT BY INCREASING
+  else {
+      this.sortItems(ItemSortCriteria.SORT_BY_TASK_INCREASING);
+  }
+}
+
+compare = (item1, item2) => {
+
+  // IF IT'S A DECREASING CRITERIA SWAP THE ITEMS
+  if (this.isCurrentItemSortCriteria(ItemSortCriteria.SORT_BY_TASK_DECREASING)
+      || this.isCurrentItemSortCriteria(ItemSortCriteria.SORT_BY_STATUS_DECREASING)
+      || this.isCurrentItemSortCriteria(ItemSortCriteria.SORT_BY_DUE_DATE_DECREASING)) {
+      let temp = item1;
+      item1 = item2;
+      item2 = temp;
+  }
+  // SORT BY ITEM DESCRIPTION
+  if (this.isCurrentItemSortCriteria(ItemSortCriteria.SORT_BY_TASK_INCREASING)
+      || this.isCurrentItemSortCriteria(ItemSortCriteria.SORT_BY_TASK_DECREASING)) {
+      if (item1.description < item2.description)
+          return -1;
+      else if (item1.description > item2.description)
+          return 1;
+      else
+          return 0;
+  }
+
+  else if (this.isCurrentItemSortCriteria(ItemSortCriteria.SORT_BY_DUE_DATE_INCREASING)
+            || this.isCurrentItemSortCriteria(ItemSortCriteria.SORT_BY_DUE_DATE_DECREASING)) {
+            let dueDate1 = item1.due_date;
+            let dueDate2 = item2.due_date;
+            let date1 = new Date(dueDate1);
+            let date2 = new Date(dueDate2);
+            if (date1 < date2)
+                return -1;
+            else if (date1 > date2)
+                return 1;
+            else
+                return 0;
+  }
+
+  // SORT BY COMPLETED
+  else {
+      if (item1.completed < item2.completed)
+          return -1;
+      else if (item1.completed > item2.completed)
+          return 1;
+      else
+          return 0;
+  }
+}
 
   deleteList = (key) => {
     this.setState({ todoLists: [...this.state.todoLists.filter( TodoList => TodoList.key !== key)] });
@@ -105,6 +204,9 @@ class App extends Component {
           visibility = {this.state.visibility}
           moveUp = {this.moveUp.bind(this)}
           moveDown = {this.moveDown.bind(this)}
+          processSortItemsByDueDate = {this.processSortItemsByDueDate.bind(this)}
+          processSortItemsByStatus = {this.processSortItemsByStatus.bind(this)}
+          processSortItemsByTask = {this.processSortItemsByTask.bind(this)}
           deleteItem = {this.deleteItem.bind(this)}>
           </ListScreen>;
       case AppScreen.ITEM_SCREEN:

@@ -8,10 +8,10 @@ export class ListItemsTable extends Component {
         return (
             <div id="list_items_container" className = "list_item_header_card">
                 <div id="todo_item" > 
-                <div className="list_item_header_card"> </div>
-                <div className="list_item_task_header">Task</div>
-                <div className="list_item_due_date_header">Due Date</div>
-                <div className="list_item_status_header">Status</div>
+                <div className="list_item_header_card" > </div>
+                <div className="list_item_task_header" onClick= {this.props.processSortItemsByTask} >Task</div>
+                <div className="list_item_due_date_header" onClick= {this.props.processSortItemsByDueDate} >Due Date</div>
+                <div className="list_item_status_header" onClick= {this.props.processSortItemsByStatus} >Status</div>
                 {
                     this.props.todoList.items.map((todoItem)=>(
                         <ListItemCard 
