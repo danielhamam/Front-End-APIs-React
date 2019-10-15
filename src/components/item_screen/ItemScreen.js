@@ -21,7 +21,7 @@ export class ItemScreen extends Component {
                 <input id="item_completed_checkbox" class="item_input" type="checkbox" />
             </div>
             <br />
-            <button id="item_form_submit_button" class="item_button">Submit</button>
+            <button id="item_form_submit_button" class="item_button" onClick= {this.props.processSubmitChanges} >Submit</button>
             <button id="item_form_cancel_button" class="item_button" onClick={this.props.goListScreen}>Cancel</button>
     </div>
         )

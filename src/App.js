@@ -4,7 +4,8 @@ import HomeScreen from './components/home_screen/HomeScreen'
 import ItemScreen from './components/item_screen/ItemScreen'
 import ListScreen from './components/list_screen/ListScreen'
 import PropTypes from 'prop-types'
-import ItemDelete from './components/list_screen/ItemDelete';
+import ItemDelete from './components/list_screen/ItemDelete'
+import ListItemCard from './components/list_screen/ListItemCard.js';
 
 const AppScreen = {
   HOME_SCREEN: "HOME_SCREEN",
@@ -30,6 +31,81 @@ class App extends Component {
     currentItemSortCriteria : null,
   }
 
+processAddItem = () => {
+  this.goItemScreen();
+}
+
+helperAddItem = () => {
+
+  let item_desc_initial = document.getElementById('item_description_textfield');
+  let item_assigned_initial = document.getElementById('item_assigned_to_textfield');
+  let item_due_date_initial = document.getElementById('item_due_date_picker');
+  let item_completed_initial = document.getElementById('item_completed_checkbox'); 
+
+  var new_item = {
+    "key": this.state.currentList.items.length,
+    "description": "",
+    "due_date": "",
+    "assigned_to": "",
+    "completed": false,
+  }
+
+  if (item_completed_initial.checked === true) {
+      new_item.completed = true;
+  }
+
+  new_item.description = item_desc_initial.value;
+  new_item.assigned_to = item_assigned_initial.value;
+  new_item.due_date = item_due_date_initial.value; 
+
+ this.state.currentList.items.push(new_item);
+
+}
+
+processEditItem = (key) => {
+
+  this.helperEditItem(key);
+  this.setState( {currentScreen: AppScreen.ITEM_SCREEN} );
+
+}
+
+helperEditItem = (key) => {
+
+  var item_desc_initial = document.getElementById('item_description_textfield');
+  var item_assigned_initial = document.getElementById('item_assigned_to_textfield');
+  var item_due_date_initial = document.getElementById('item_due_date_picker');
+  var item_completed_initial = document.getElementById('item_completed_checkbox'); 
+
+  var itemBeingEdited = this.state.currentList.items[key];
+
+  item_desc_initial.value = itemBeingEdited.description;
+  item_assigned_initial.value = itemBeingEdited.assigned_to;
+  item_due_date_initial.value = itemBeingEdited.due_date;
+
+  item_completed_initial.value = false;
+  if (itemBeingEdited.checked === true) {
+    item_completed_initial.value = true;
+  }
+}
+
+createNewList = () => {
+
+  let the_key = this.state.todoLists.length;
+
+  var new_list = {
+    "key": the_key,
+    "name" : "Unknown name",
+    "owner" : "Unknown owner",
+    "items": [],
+   }
+
+   this.state.todoLists.push(new_list);
+   this.setState( {todolists: this.state.todoLists});
+   this.loadList(new_list);
+   this.setState( {currentScreen: AppScreen.LIST_SCREEN} );
+
+}
+
 isCurrentItemSortCriteria = (testCriteria) => {
     return this.state.currentItemSortCriteria === testCriteria;
 }
@@ -37,6 +113,11 @@ isCurrentItemSortCriteria = (testCriteria) => {
 sortItems = (sortingCriteria) => {
     this.setState({currentItemSortCriteria : sortingCriteria});
     this.state.currentList.items.sort(this.compare);
+
+    for (let i = 0; i < this.state.currentList.items.length; i++) {
+      this.state.currentList.items[i].key = i;
+    }
+
     this.setState({currentList: this.state.currentList});
 }
 
@@ -49,6 +130,18 @@ processSortItemsByDueDate = () => {
     else {
         this.sortItems(ItemSortCriteria.SORT_BY_DUE_DATE_INCREASING);
     }
+}
+
+processSubmitChanges = () => {
+
+  // For Add Item
+
+
+  // For Edit Item
+
+  this.helperAddItem();
+  this.setState({currentList: this.state.currentList});
+  this.setState({currentScreen: AppScreen.LIST_SCREEN});
 }
 
 processSortItemsByStatus = () => {
@@ -77,8 +170,8 @@ compare = (item1, item2) => {
 
   // IF IT'S A DECREASING CRITERIA SWAP THE ITEMS
   if (this.isCurrentItemSortCriteria(ItemSortCriteria.SORT_BY_TASK_DECREASING)
-      || this.isCurrentItemSortCriteria(ItemSortCriteria.SORT_BY_STATUS_DECREASING)
-      || this.isCurrentItemSortCriteria(ItemSortCriteria.SORT_BY_DUE_DATE_DECREASING)) {
+      || this.isCurrentItemSortCriteria(ItemSortCriteria.SORT_BY_DUE_DATE_DECREASING)
+      || this.isCurrentItemSortCriteria(ItemSortCriteria.SORT_BY_STATUS_DECREASING)) {
       let temp = item1;
       item1 = item2;
       item2 = temp;
@@ -107,7 +200,6 @@ compare = (item1, item2) => {
             else
                 return 0;
   }
-
   // SORT BY COMPLETED
   else {
       if (item1.completed < item2.completed)
@@ -192,11 +284,14 @@ compare = (item1, item2) => {
       case AppScreen.HOME_SCREEN:
         return <HomeScreen 
         loadList={this.loadList.bind(this)} 
-        todoLists={this.state.todoLists} />;
+        todoLists={this.state.todoLists}
+        createNewList = {this.createNewList.bind(this)} />;
       case AppScreen.LIST_SCREEN:            
         return <ListScreen
           goHome={this.goHome.bind(this)}
           goItemScreen={this.goItemScreen.bind(this)}
+          processAddItem = {this.processAddItem.bind(this)}
+          processEditItem = {this.processEditItem.bind(this)}
           todoList={this.state.currentList}
           visibilityTrue = {this.visibilityTrue.bind(this)}
           visibilityFalse = {this.visibilityFalse.bind(this)}
@@ -211,7 +306,8 @@ compare = (item1, item2) => {
           </ListScreen>;
       case AppScreen.ITEM_SCREEN:
         return <ItemScreen 
-          goListScreen={this.goListScreen.bind(this)} />;
+          goListScreen={this.goListScreen.bind(this)} 
+          processSubmitChanges = {this.processSubmitChanges.bind(this)}/>;
       default:
         return <div>ERROR</div>;
     }

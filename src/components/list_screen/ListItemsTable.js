@@ -21,11 +21,12 @@ export class ListItemsTable extends Component {
                             moveUp = {this.props.moveUp.bind(this, todoItem.key)}
                             moveDown = {this.props.moveDown.bind(this, todoItem.key)}
                             deleteItem = {this.props.deleteItem.bind(this, todoItem.key)}
+                            processEditItem = {this.props.processEditItem.bind(this, todoItem.key)}
                             />
                     ))
                 }
                 
-                <div className="list_item_add_card" onClick={this.props.goItemScreen}>
+                <div className="list_item_add_card" onClick={this.props.processAddItem}>
                 <img src = {AddItem}/>
                 </div>
                 </div>
