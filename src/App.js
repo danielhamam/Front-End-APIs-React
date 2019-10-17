@@ -22,6 +22,10 @@ const ItemSortCriteria = {
   SORT_BY_STATUS_DECREASING: "sort_by_status_decreasing"
 };
 
+const ItemIndex = {
+  Index: -1,
+}
+
 class App extends Component {
   state = {
     currentScreen: AppScreen.HOME_SCREEN,
@@ -36,34 +40,12 @@ processAddItem = () => {
 }
 
 helperAddItem = () => {
-
-  let item_desc_initial = document.getElementById('item_description_textfield');
-  let item_assigned_initial = document.getElementById('item_assigned_to_textfield');
-  let item_due_date_initial = document.getElementById('item_due_date_picker');
-  let item_completed_initial = document.getElementById('item_completed_checkbox'); 
-
-  var new_item = {
-    "key": this.state.currentList.items.length,
-    "description": "",
-    "due_date": "",
-    "assigned_to": "",
-    "completed": false,
-  }
-
-  if (item_completed_initial.checked === true) {
-      new_item.completed = true;
-  }
-
-  new_item.description = item_desc_initial.value;
-  new_item.assigned_to = item_assigned_initial.value;
-  new_item.due_date = item_due_date_initial.value; 
-
- this.state.currentList.items.push(new_item);
-
+  this.goItemScreen();  
 }
 
 processEditItem = (key) => {
 
+  ItemIndex.Index = key
   this.helperEditItem(key);
   this.goItemScreen();
 
@@ -134,12 +116,40 @@ processSortItemsByDueDate = () => {
 
 processSubmitChanges = () => {
 
-  // For Add Item
+  let item_desc_initial = document.getElementById('item_description_textfield');
+  let item_assigned_initial = document.getElementById('item_assigned_to_textfield');
+  let item_due_date_initial = document.getElementById('item_due_date_picker');
+  let item_completed_initial = document.getElementById('item_completed_checkbox'); 
 
+  var new_item = {
+    "key": this.state.currentList.items.length,
+    "description": "",
+    "due_date": "",
+    "assigned_to": "",
+    "completed": false,
+  }
 
-  // For Edit Item
+  if (item_completed_initial.checked === true) {
+      new_item.completed = true;
+  }
+  else {
+    new_item.completed= false;
+  }
 
-  this.helperAddItem();
+  new_item.description = item_desc_initial.value;
+  new_item.assigned_to = item_assigned_initial.value;
+  new_item.due_date = item_due_date_initial.value; 
+
+  if (ItemIndex.Index !== -1) {
+    this.state.currentList.items[ItemIndex.Index ].description = item_desc_initial.value;
+    this.state.currentList.items[ItemIndex.Index ].assigned_to = item_assigned_initial.value;
+    this.state.currentList.items[ItemIndex.Index ].due_date = item_due_date_initial.value;
+    this.state.currentList.items[ItemIndex.Index ].completed = item_completed_initial.checked;
+  }
+  else {
+    this.state.currentList.items.push(new_item);
+  }
+  ItemIndex.Index = -1;
   this.setState({currentList: this.state.currentList});
   this.setState({currentScreen: AppScreen.LIST_SCREEN});
 }
@@ -217,7 +227,8 @@ compare = (item1, item2) => {
     this.setState({currentScreen: AppScreen.HOME_SCREEN});
   }
 
-  moveUp = (key) => {
+  moveUp = (key, event) => {
+    event.stopPropagation();
     if (key != 0) {
       let tempItem = this.state.currentList.items[key - 1];
       this.state.currentList.items[key - 1] = this.state.currentList.items[key];
@@ -229,7 +240,8 @@ compare = (item1, item2) => {
     this.setState({currentList: this.state.currentList});
   }
 
-  moveDown = (key) => {
+  moveDown = (key, event) => {
+    event.stopPropagation();
   if (key != this.state.currentList.items.length - 1) {
     let temp = this.state.currentList.items[key + 1];
     temp.key = temp.key - 1;
@@ -240,7 +252,8 @@ compare = (item1, item2) => {
   this.setState({currentList: this.state.currentList});
 }
 
-  deleteItem = (key) => {
+  deleteItem = (key ,event) => {
+    event.stopPropagation();
 
     this.state.currentList.items.splice(key, 1);
 

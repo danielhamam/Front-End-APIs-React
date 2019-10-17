@@ -195,13 +195,6 @@ font-size: 16pt;
 }
 
 .modal_dialog {
-  position: relative;
-  width: 500px;
-  max-height: 80vh;
-  border-radius: 5px;
-  background: var(--swatch-complement);
-  overflow: auto;
-  cursor: default;
 }
 
 /*CUSTOM VARIABLES HERE*/
