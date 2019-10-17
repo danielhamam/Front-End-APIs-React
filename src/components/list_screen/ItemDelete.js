@@ -9,7 +9,7 @@ export class ItemDelete extends Component {
             return null;
         }
         return (
-            <div id= "modal_yes_no_dialog" >
+            <div id="modal_yes_no_dialog">
                 <p>   Delete list? </p>
                 <br />
                 <br />

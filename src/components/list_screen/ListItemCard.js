@@ -13,7 +13,7 @@ export class ListItemCard extends Component {
         }
 
     isFirst() {
-        if (this.props.listItem.key == 0) {
+        if (this.props.listItem.key === 0) {
             return true;
         }
         else {

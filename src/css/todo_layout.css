@@ -171,7 +171,7 @@ body {
 }
 
 .disable {
-  float : right;
+    float : right;
   width: 48px;
   text-align : center;
   height: 48px;

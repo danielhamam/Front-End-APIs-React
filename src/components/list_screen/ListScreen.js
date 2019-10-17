@@ -64,6 +64,14 @@ export class ListScreen extends Component {
                             onChange = {e => this.setListOwner(e.target.value)} />
                     </div>
                 </div>
+
+            <div hidden>
+                <input id="item_description_textfield"  />
+                <input id="item_assigned_to_textfield" />
+                <input id="item_due_date_picker" />
+                <input id="item_completed_checkbox" />
+            </div>
+
                 <ListItemsTable todoList={this.props.todoList} processAddItem = {this.props.processAddItem} processEditItem = {this.props.processEditItem} goItemScreen = {this.props.goItemScreen} goListScreen = {this.props.goListScreen} moveUp = {this.props.moveUp} moveDown={this.props.moveDown} deleteItem = {this.props.deleteItem} processSortItemsByTask = {this.props.processSortItemsByTask} processSortItemsByDueDate = {this.props.processSortItemsByDueDate} processSortItemsByStatus = {this.props.processSortItemsByStatus} />
                 <ItemDelete visibility = {this.props.visibility} visibilityFalse = {this.props.visibilityFalse} deleteList = {this.props.deleteList.bind( this, this.getListKey() )} />
             </div>         

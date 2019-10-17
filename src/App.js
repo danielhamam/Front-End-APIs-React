@@ -65,16 +65,16 @@ helperAddItem = () => {
 processEditItem = (key) => {
 
   this.helperEditItem(key);
-  this.setState( {currentScreen: AppScreen.ITEM_SCREEN} );
+  this.goItemScreen();
 
 }
 
 helperEditItem = (key) => {
 
-  var item_desc_initial = document.getElementById('item_description_textfield');
-  var item_assigned_initial = document.getElementById('item_assigned_to_textfield');
-  var item_due_date_initial = document.getElementById('item_due_date_picker');
-  var item_completed_initial = document.getElementById('item_completed_checkbox'); 
+  let item_desc_initial = document.getElementById('item_description_textfield');
+  let item_assigned_initial = document.getElementById('item_assigned_to_textfield');
+  let item_due_date_initial = document.getElementById('item_due_date_picker');
+  let item_completed_initial = document.getElementById('item_completed_checkbox'); 
 
   var itemBeingEdited = this.state.currentList.items[key];
 
@@ -82,9 +82,9 @@ helperEditItem = (key) => {
   item_assigned_initial.value = itemBeingEdited.assigned_to;
   item_due_date_initial.value = itemBeingEdited.due_date;
 
-  item_completed_initial.value = false;
-  if (itemBeingEdited.checked === true) {
-    item_completed_initial.value = true;
+  item_completed_initial.checked = false;
+  if (itemBeingEdited.completed === true) {
+    item_completed_initial.checked = true;
   }
 }
 
@@ -307,7 +307,7 @@ compare = (item1, item2) => {
       case AppScreen.ITEM_SCREEN:
         return <ItemScreen 
           goListScreen={this.goListScreen.bind(this)} 
-          processSubmitChanges = {this.processSubmitChanges.bind(this)}/>;
+          processSubmitChanges = {this.processSubmitChanges.bind(this)} />;
       default:
         return <div>ERROR</div>;
     }
