@@ -15,7 +15,7 @@ class TodoListLinks extends Component {
             </div>
         );
     }
-}
+} 
 
 TodoListLinks.propTypes = {
     loadList: PropTypes.func.isRequired,

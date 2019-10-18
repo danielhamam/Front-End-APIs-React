@@ -9,7 +9,7 @@ export class ItemDelete extends Component {
             return null;
         }
         return (
-            <div id="modal_yes_no_dialog" >
+            <div class="modal_yes_no_dialog" >
                 <p>   Delete list? </p>
                 <br />
                 <br />
@@ -17,7 +17,7 @@ export class ItemDelete extends Component {
                 <p> <strong> Are you sure you want to delete this list? </strong> </p>
                 <br />
                 <button id='yes' onClick = {this.props.deleteList} >Yes </button>
-                <button id='no' onClick = {this.props.visibilityFalse}>No</button>
+                <button id='no' onClick = {this.props.visibilityFalse} >No</button>
                 <p>  The list will not be retrievable.</p> 
             </div>
         ) 

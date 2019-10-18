@@ -224,51 +224,51 @@ font-size: 16pt;
 
 /* ANIMATIONS
 –––––––––––––––––––––––––––––––––––––––––––––––––– */
-[data-animation] .modal_dialog {
+[data-animation] .modal_yes_no_dialog {
   opacity: 0;
   transition: all 0.5s var(--bounceEasing);
 }
 
-[data-animation].is_visible .modal_dialog {
+[data-animation].is_visible .modal_yes_no_dialog {
   opacity: 1;
   transition-delay: 0.2s;
 }
 
-[data-animation="slideInOutDown"] .modal_dialog {
+[data-animation="slideInOutDown"] .modal_yes_no_dialog {
   transform: translateY(100%);
 }
 
-[data-animation="slideInOutTop"] .modal_dialog {
+[data-animation="slideInOutTop"] .modal_yes_no_dialog {
   transform: translateY(-100%);
 }
 
-[data-animation="slideInOutLeft"] .modal_dialog {
+[data-animation="slideInOutLeft"] .modal_yes_no_dialog {
   transform: translateX(-100%);
 }
 
-[data-animation="slideInOutRight"] .modal_dialog {
+[data-animation="slideInOutRight"] .modal_yes_no_dialog {
   transform: translateX(100%);
 }
 
-[data-animation="zoomInOut"] .modal_dialog {
+[data-animation="zoomInOut"] .modal_yes_no_dialog {
   transform: scale(0.2);
 }
 
-[data-animation="rotateInOutDown"] .modal_dialog {
+[data-animation="rotateInOutDown"] .modal_yes_no_dialog {
   transform-origin: top left;
   transform: rotate(-1turn);
 }
 
-[data-animation="mixInAnimations"].is_visible .modal_dialog {
+[data-animation="mixInAnimations"].is_visible .modal_yes_no_dialog {
   animation: mixInAnimations 2s 0.2s linear forwards;
 }
 
-[data-animation="slideInOutDown"].is_visible .modal_dialog,
-[data-animation="slideInOutTop"].is_visible .modal_dialog,
-[data-animation="slideInOutLeft"].is_visible .modal_dialog,
-[data-animation="slideInOutRight"].is_visible .modal_dialog,
-[data-animation="zoomInOut"].is_visible .modal_dialog,
-[data-animation="rotateInOutDown"].is_visible .modal_dialog {
+[data-animation="slideInOutDown"].is_visible .modal_yes_no_dialog,
+[data-animation="slideInOutTop"].is_visible .modal_yes_no_dialog,
+[data-animation="slideInOutLeft"].is_visible .modal_yes_no_dialog,
+[data-animation="slideInOutRight"].is_visible .modal_yes_no_dialog,
+[data-animation="zoomInOut"].is_visible .modal_yes_no_dialog,
+[data-animation="rotateInOutDown"].is_visible .modal_yes_no_dialog {
   transform: none;
 }
 
@@ -318,11 +318,21 @@ font-size: 16pt;
   }
 }
 
-#modal_yes_no_dialog {
+.modal_yes_no_dialog {
   background-color: #E1E4CB;
   border: none;
   padding-left: 2%;
+  animation: fadeIn 1s alternate;
 }
+
+@keyframes fadeIn { 
+  from { opacity: 0; }
+}
+
+@keyframes fadeOut { 
+  to { opacity: 0; }
+}
+
 
 #yes, #no {
   background-color: rgb(223, 223, 223);

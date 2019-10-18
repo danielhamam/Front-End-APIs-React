@@ -148,12 +148,18 @@ body {
   margin-top: 1%;
 }
 
-#modal_yes_no_dialog {
+.modal_yes_no_dialog {
   position: absolute;
   height: 275px;
   width: 535px;
   top: 162px;
   right: 280px;
+  /* For Animation */
+  /* position: relative;
+  height: 275px;
+  width: 535px;
+  bottom: 10px;
+  left: 500px; */
 }
 
 #yes, #no {

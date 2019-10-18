@@ -3,6 +3,7 @@ import ListHeading from './ListHeading'
 import ListItemsTable from './ListItemsTable'
 import ListTrash from './ListTrash'
 import ItemDelete from './ItemDelete'
+import jTPS from '../transactions/jTPS'
 import PropTypes from 'prop-types';
 
 export class ListScreen extends Component {

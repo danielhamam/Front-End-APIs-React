@@ -5,6 +5,8 @@ import ItemScreen from './components/item_screen/ItemScreen'
 import ListScreen from './components/list_screen/ListScreen'
 import PropTypes from 'prop-types'
 import ItemDelete from './components/list_screen/ItemDelete'
+import jTPS from './components/transactions/jTPS'
+import trans_move from './components/transactions/trans_move'
 import ListItemCard from './components/list_screen/ListItemCard.js';
 
 const AppScreen = {
@@ -27,12 +29,14 @@ const ItemIndex = {
 }
 
 class App extends Component {
+  
   state = {
     currentScreen: AppScreen.HOME_SCREEN,
     todoLists: testTodoListData.todoLists,
     currentList: null,
     visibility : false,
     currentItemSortCriteria : null,
+    my_jtps : new jTPS(),
   }
 
 processAddItem = () => {
@@ -236,7 +240,15 @@ compare = (item1, item2) => {
 
       this.state.currentList.items[key].key = this.state.currentList.items[key].key + 1;
       this.state.currentList.items[key-1].key = this.state.currentList.items[key-1].key - 1;
+
+      var firstItem = this.state.currentList.items[key];
+      var secondItem = this.state.currentList.items[key - 1];
+      var new_transaction = new trans_move(this.state.currentList, firstItem.key, secondItem.key, firstItem, secondItem);
+      // Now, let us store as transaction in the stack
+      this.state.my_jtps.addTransaction(new_transaction);
     }
+    
+
     this.setState({currentList: this.state.currentList});
   }
 
@@ -248,6 +260,12 @@ compare = (item1, item2) => {
     this.state.currentList.items[key].key = this.state.currentList.items[key].key + 1;
     this.state.currentList.items[key + 1] = this.state.currentList.items[key];
     this.state.currentList.items[key]= temp;
+
+    var firstItem = this.state.currentList.items[key];
+    var secondItem = this.state.currentList.items[key + 1];
+    var new_transaction = new trans_move(this.state.currentList, firstItem.key, secondItem.key, firstItem, secondItem);
+    // Now, let us store as transaction in the stack
+    this.state.my_jtps.addTransaction(new_transaction);
   }
   this.setState({currentList: this.state.currentList});
 }
@@ -292,7 +310,19 @@ compare = (item1, item2) => {
     console.log("currentScreen: " + this.state.currentScreen);
   }
 
+  processCheck = (event) => {
+    if (event.ctrlKey && event.keyCode == 90) { // if it is ctrl + z
+      this.state.my_jtps.undoTransaction();
+      this.setState({currentList: this.state.currentList});
+      }
+    else if (event.ctrlKey && event.keyCode == 89) {
+      this.state.my_jtps.doTransaction();
+      this.setState({currentList: this.state.currentList});
+      }
+    }
+
   render() {
+    document.addEventListener('keydown', this.processCheck); // detects for any key pressed 
     switch(this.state.currentScreen) {
       case AppScreen.HOME_SCREEN:
         return <HomeScreen 
