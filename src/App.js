@@ -345,7 +345,8 @@ compare = (item1, item2) => {
           processSortItemsByDueDate = {this.processSortItemsByDueDate.bind(this)}
           processSortItemsByStatus = {this.processSortItemsByStatus.bind(this)}
           processSortItemsByTask = {this.processSortItemsByTask.bind(this)}
-          deleteItem = {this.deleteItem.bind(this)}>
+          deleteItem = {this.deleteItem.bind(this)}
+          my_jtps = {this.state.my_jtps}>
           </ListScreen>;
       case AppScreen.ITEM_SCREEN:
         return <ItemScreen 

@@ -1,0 +1,3 @@
+Regular Todo_Hw2: https://github.com/cr0ck3r/CSE316_hw2
+
+jTPS: https://github.com/cr0ck3r/jTPS_hw2

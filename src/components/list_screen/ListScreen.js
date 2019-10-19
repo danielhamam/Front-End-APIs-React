@@ -35,6 +35,7 @@ export class ListScreen extends Component {
     }
 
     setListName(name) {
+        this.state.my_jtps.undoTransaction();
         this.props.todoList.name = name;
     }
 
